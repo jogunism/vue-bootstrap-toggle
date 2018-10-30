@@ -23,6 +23,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    toggle: {
+      type: Function,
+      default: () => {}
+    }
   },
   data() {
     return { updating: false, };
@@ -39,6 +43,11 @@ export default {
       }
 
       this.$$el.bootstrapToggle(newValue ? 'on' : 'off');
+
+      // delegate to method
+      this.$$el.change(() => {
+         this.toggle($(this).prop('checked'))
+      })
     },
     disabled(newValue) {
       this.$$el.bootstrapToggle(newValue ? 'disable' : 'enable');
